@@ -3,7 +3,7 @@ async function searchFlights() {
     const to = document.getElementById('to').value;
 
     // This calls your Node.js backend port 5000
-    const response = await fetch(`http://localhost:5000/flights?origin=${from}&destination=${to}`);
+    const response = await fetch(`https://jetswift-full.onrender.com/flights?origin=${from}&destination=${to}`);
     const flights = await response.json();
     
     displayFlights(flights);
