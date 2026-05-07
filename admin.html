@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>JetSwift | Admin Dashboard</title>
+    <style>
+        body { font-family: sans-serif; background: #0f172a; color: white; padding: 40px; }
+        .card { background: rgba(255,255,255,0.05); padding: 20px; border-radius: 15px; border: 1px solid rgba(255,255,255,0.1); }
+        table { width: 100%; border-collapse: collapse; margin-top: 20px; }
+        th, td { padding: 12px; text-align: left; border-bottom: 1px solid rgba(255,255,255,0.1); }
+        th { color: #00d2ff; }
+        .badge { background: #00d2ff; color: #000; padding: 4px 8px; border-radius: 5px; font-weight: bold; }
+    </style>
+</head>
+<body>
+    <h1>JetSwift Admin Terminal</h1>
+    <div class="card">
+        <h2>Recent Transactions</h2>
+        <p id="stats-total">Total Bookings: Loading...</p>
+        <table>
+            <thead>
+                <tr>
+                    <th>Customer</th>
+                    <th>Route</th>
+                    <th>Airline</th>
+                    <th>Price</th>
+                    <th>Booked On</th>
+                </tr>
+            </thead>
+            <tbody id="admin-tbody"></tbody>
+        </table>
+    </div>
+
+    <script>
+        async function loadAdminData() {
+            const res = await fetch('https://jetswift-full.onrender.com/admin/stats');
+            const bookings = await res.json();
+            
+            document.getElementById('stats-total').innerText = `Total Bookings: ${bookings.length}`;
+            const tbody = document.getElementById('admin-tbody');
+            
+            tbody.innerHTML = bookings.map(b => `
+                <tr>
+                    <td>${b.userName}<br><small>${b.userEmail}</small></td>
+                    <td>${b.origin} ➔ ${b.destination}</td>
+                    <td>${b.airline}</td>
+                    <td><span class="badge">₹${b.price}</span></td>
+                    <td>${new Date(b.bookedAt).toLocaleDateString()}</td>
+                </tr>
+            `).join('');
+        }
+        loadAdminData();
+    </script>
+</body>
+</html>

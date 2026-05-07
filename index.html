@@ -102,13 +102,16 @@
             <div class="profile-trigger" onclick="toggleDropdown(event)">
                 <span id="user-display-name">Pilot</span> ▾
             </div>
-            <div class="dropdown-menu" id="profile-dropdown">
-                <div class="dropdown-item" onclick="showProfile()">Protocol: Profile</div>
-                <div class="dropdown-item" onclick="showSearch()">Protocol: Search</div>
-                <hr style="border: 0; border-top: 1px solid rgba(255,255,255,0.05);">
-                <div class="dropdown-item" onclick="handleLogout()" style="color: var(--danger);">Terminate Session</div>
-            </div>
-        </div>
+            <!-- Inside the dropdown-menu div -->
+    <div class="dropdown-menu" id="profile-dropdown">
+       <div class="dropdown-item" onclick="showProfile()">Protocol: Profile</div>
+       <div class="dropdown-item" onclick="showSearch()">Protocol: Search</div>
+       <!-- NEW LINK BELOW -->
+       <div class="dropdown-item" onclick="window.location.href='admin.html'" style="color: var(--primary-glow);">Protocol: Admin Terminal</div>
+       <hr style="border: 0; border-top: 1px solid rgba(255,255,255,0.05);">
+       <div class="dropdown-item" onclick="handleLogout()" style="color: var(--danger);">Terminate Session</div>
+    </div>
+    </div>
     </header>
 
     <div class="main-content">
