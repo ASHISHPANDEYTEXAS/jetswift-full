@@ -133,9 +133,22 @@ app.get('/flights/search', async (req, res) => {
 });
 
 app.post('/create-order', async (req, res) => {
-    const options = { amount: req.body.amount * 100, currency: "INR", receipt: `rec_${Date.now()}` };
-    const order = await razorpay.orders.create(options);
-    res.json(order);
+    try {
+        const amount = Math.round(req.body.amount * 100); // Convert to Paise
+        if (!amount || amount <= 0) return res.status(400).json({ error: "Invalid amount" });
+
+        const options = {
+            amount: amount, 
+            currency: "INR",
+            receipt: `receipt_${Date.now()}`,
+        };
+
+        const order = await razorpay.orders.create(options);
+        res.status(200).json(order);
+    } catch (err) {
+        console.error("Razorpay Order Error:", err);
+        res.status(500).json({ error: "Razorpay order failed" });
+    }
 });
 
 // NEW: Save booking after payment
